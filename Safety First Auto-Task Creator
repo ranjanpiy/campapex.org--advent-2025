@@ -1,0 +1,137 @@
+Safety First Auto-Task Creator
+
+Grandma Kelly is managing the Family Support App and wants to ensure that every high-priority Health & Safety plan gets an automatic safety review task assigned to the pediatrician, Dr. Grace Evergreen. She needs your help setting up the automation to do so.
+
+Create a record-triggered automation (using a Record-Triggered Flow or an Apex Trigger) that automatically creates a Village Task when certain conditions are met.
+
+Requirements
+Trigger Event: After a Family Support Plan is inserted
+Conditions: Priority = 'High' AND Focus Area = 'Health & Safety'
+Action: Create a new Village Task with these field values:
+Assigned Character = 'Dr. Grace Evergreen'
+Status = 'Not Started'
+Is Baby Safety Critical = true
+Task Type = 'Health & Safety Check'
+Support Phase = Match the parent plan's Phase field
+Family Support Plan = Link to the newly created plan
+Examples
+Example 1:
+
+Insert: Family Support Plan with Priority='High', Focus Area='Health & Safety', Phase='Before Baby Arrives'
+Result: 1 Village Task created with Assigned Character='Dr. Grace Evergreen', Status='Not Started', Is Baby Safety Critical=true, Support Phase='Before Baby Arrives'
+Example 2:
+
+Insert: Family Support Plan with Priority='Medium', Focus Area='Health & Safety'
+Result: No Village Task created (Priority must be 'High')
+Example 3:
+
+Insert: Family Support Plan with Priority='High', Focus Area='Nursery & Home Setup'
+Result: No Village Task created (Focus Area must be 'Health & Safety')
+Example 4:
+
+Insert: 2 Family Support Plans, both with Priority='High', Focus Area='Health & Safety', Phase='After Baby Arrives'
+Result: 2 Village Tasks created, one linked to each plan, both with Support Phase='After Baby Arrives'
+Notes
+Use either a Record-Triggered Flow or an Apex Trigger (your choice!)
+Only trigger on insert (after insert context)
+Always link the Village Task to its parent via the Family Support Plan lookup field
+Handle bulk operations properly (multiple records inserted at once)
+Testing will insert records and query Village Task to verify your automation ran correctly
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Day 1- Safety First Auto-Task Creator {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Day 1- Safety First Auto-Task Creator</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Village_Task</name>
+        <label>Create Village Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Assigned_Character__c</field>
+            <value>
+                <stringValue>Dr. Grace Evergreen</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CAMPX__Family_Support_Plan__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CAMPX__Is_Baby_Safety_Critical__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CAMPX__Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CAMPX__Support_Phase__c</field>
+            <value>
+                <elementReference>$Record.CAMPX__Phase__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CAMPX__Task_Type__c</field>
+            <value>
+                <stringValue>Health &amp; Safety Check</stringValue>
+            </value>
+        </inputAssignments>
+        <object>CAMPX__Village_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Village_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CAMPX__Priority__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CAMPX__Focus_Area__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Health &amp; Safety</stringValue>
+            </value>
+        </filters>
+        <object>CAMPX__Family_Support_Plan__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
