@@ -46,3 +46,205 @@ Only set Assigned Character for the specific Task Types listed above
 If the Task Type doesn't match any of the listed types, leave Assigned Character blank
 Handle bulk operations properly (multiple records at once)
 If Assigned Character is already set manually, respect that value (don't overwrite it)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_for_Assigned_Character_based_on_Task_Type</name>
+        <label>Check for Assigned Character based on Task Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cook_Deliver_Meal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CAMPX__Task_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cook / Deliver Meal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Records_Cook_Delivery_Meal</targetReference>
+            </connector>
+            <label>Cook/Deliver Meal</label>
+        </rules>
+        <rules>
+            <name>Build_Fix</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CAMPX__Task_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Build / Fix</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Records_Build_Fix</targetReference>
+            </connector>
+            <label>Build / Fix</label>
+        </rules>
+        <rules>
+            <name>Health_Safety_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CAMPX__Task_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Health &amp; Safety Check</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Records_Health_Safety_Check</targetReference>
+            </connector>
+            <label>Health &amp; Safety Check</label>
+        </rules>
+        <rules>
+            <name>Decorate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CAMPX__Task_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Decorate</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Records_Decorate</targetReference>
+            </connector>
+            <label>Decorate</label>
+        </rules>
+        <rules>
+            <name>Garden_Outdoor</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CAMPX__Task_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Garden / Outdoor</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Records_Garden_Outdoor</targetReference>
+            </connector>
+            <label>Garden / Outdoor</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Day 2 -Task Auto-Assignment by Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Day 2 -Task Auto-Assignment by Type</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Records_Build_Fix</name>
+        <label>Update Records Build / Fix</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Assigned_Character__c</field>
+            <value>
+                <stringValue>Stella Pinewood</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Records_Cook_Delivery_Meal</name>
+        <label>Update Records Cook/Delivery Meal</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Assigned_Character__c</field>
+            <value>
+                <stringValue>Ginger Claus</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Records_Decorate</name>
+        <label>Update Records Decorate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Assigned_Character__c</field>
+            <value>
+                <stringValue>Poppy Wintergold</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Records_Garden_Outdoor</name>
+        <label>Update Records Garden / Outdoor</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Assigned_Character__c</field>
+            <value>
+                <stringValue>Ivy Evergreen</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Records_Health_Safety_Check</name>
+        <label>Update Records Health &amp; Safety Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Assigned_Character__c</field>
+            <value>
+                <stringValue>Dr. Grace Evergreen</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_for_Assigned_Character_based_on_Task_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CAMPX__Task_Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CAMPX__Assigned_Character__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>CAMPX__Village_Task__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
+
