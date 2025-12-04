@@ -1,0 +1,104 @@
+Grandma Kelly wants to ensure all pre-arrival Village Tasks have reasonable deadlines. She's decided that any task scheduled for 'Before Baby Arrives' should automatically have a due date set to 14 days from creation, giving the village plenty of time to prepare!
+
+Before You Begin
+Create a record-triggered automation that automatically sets Due Date for pre-arrival Village Tasks.
+
+Requirements
+Trigger Event: Before a Village Task is inserted
+Conditions: Support Phase = 'Before Baby Arrives' AND Due Date is blank
+Action: Set Due Date to 14 days from today
+Examples
+Example 1:
+
+Insert: Village Task with Support Phase = 'Before Baby Arrives', no Due Date specified
+Result: Task is saved with Due Date = Today + 14 days
+Example 2:
+
+Insert: Village Task with Support Phase = 'After Baby Arrives', no Due Date specified
+Result: Task is saved with Due Date still blank (no automatic date set)
+Example 3:
+
+Insert: Village Task with Support Phase = 'Before Baby Arrives', Due Date = 2025-12-25
+Result: Task is saved with the manually specified Due Date (2025-12-25), not overwritten
+Example 4:
+
+Insert: 5 Village Tasks in bulk, all with Support Phase = 'Before Baby Arrives' and no Due Date
+Result: All 5 tasks get Due Date set to Today + 14 days
+Notes
+Use a Before Insert trigger to set the field before saving
+Use Date.today().addDays(14) in Apex or equivalent in Flow
+Only set Due Date if it's currently blank (null)
+Do not overwrite manually entered Due Dates
+Handle bulk operations properly
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <formulas>
+        <name>duedate14day</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} + 14</expression>
+    </formulas>
+    <interviewLabel>Day 4 -&gt; Auto-Set Task Due Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Day 4 -&gt; Auto-Set Task Due Date</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Due_Date_to_14_days_from_today</name>
+        <label>Due Date to 14 days from today</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>CAMPX__Due_Date__c</field>
+            <value>
+                <elementReference>duedate14day</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Due_Date_to_14_days_from_today</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CAMPX__Support_Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Before Baby Arrives</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CAMPX__Due_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>CAMPX__Village_Task__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
