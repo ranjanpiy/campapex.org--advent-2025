@@ -1,0 +1,36 @@
+Grandma Kelly noticed that some Village Tasks are being marked as 'Completed' without anyone actually being assigned to them! This doesn't make sense - how can a task be done if nobody was assigned to do it? She needs your help to add a validation rule.
+
+Before You Begin
+Create a record-triggered automation that prevents Village Tasks from being marked as Completed without an assigned villager.
+
+Requirements
+Trigger Event: Before a Village Task is inserted or updated
+Conditions: Status = 'Completed' AND Assigned Character is blank
+Action: Prevent the save and display an error message
+Error Message: "Cannot complete a task without assigning it to a villager first."
+Examples
+Example 1:
+
+Insert: Village Task with Status = 'Completed', no Assigned Character
+Result: Insert is blocked with error message
+Example 2:
+
+Update: Change existing task from Status = 'In Progress' to Status = 'Completed', but Assigned Character is blank
+Result: Update is blocked with error message
+Example 3:
+
+Insert: Village Task with Status = 'Completed', Assigned Character = 'Ginger Claus'
+Result: Task is saved successfully
+Example 4:
+
+Insert: Village Task with Status = 'Not Started', no Assigned Character
+Result: Task is saved successfully (validation only applies to Completed status)
+Notes
+Use a Before Insert and Before Update trigger
+Use addError() to display the error and prevent the save
+Validation should apply to both new records and updates
+Tasks with any other Status ('Not Started', 'In Progress', 'Blocked') can be saved without an assignment
+Handle bulk operations properly
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+AND( ISPICKVAL(CAMPX__Status__c,'Completed'),
+ISPICKVAL(CAMPX__Assigned_Character__c,''))
