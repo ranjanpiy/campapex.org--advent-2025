@@ -1,0 +1,134 @@
+Grandma Kelly wants to prevent accidental deletion of high-priority Family Support Plans that still have active Village Tasks. These are critical plans for Baby Shaya's safety and well-being, so they shouldn't be deleted unless all related tasks are completed or removed first!
+
+Before You Begin
+Create a record-triggered automation that prevents deletion of high-priority Family Support Plans with related Village Tasks.
+
+Requirements
+Trigger Event: Before a Family Support Plan is deleted
+Conditions: Priority = 'High' AND has at least one related Village Task
+Action: Prevent the deletion and display an error message
+Error Message: "Cannot delete a high-priority plan that has related tasks. Please remove all tasks first."
+Examples
+Example 1:
+
+Attempt to Delete: Family Support Plan with Priority = 'High' and 3 related Village Tasks
+Result: Deletion is blocked with error message
+Example 2:
+
+Attempt to Delete: Family Support Plan with Priority = 'High' and 0 related Village Tasks
+Result: Deletion is allowed (plan is deleted successfully)
+Example 3:
+
+Attempt to Delete: Family Support Plan with Priority = 'Medium' and 5 related Village Tasks
+Result: Deletion is allowed (only blocks High priority plans)
+Example 4:
+
+Attempt to Delete: 2 Family Support Plans in bulk, one is High priority with tasks, one is not
+Result: Entire operation is blocked with error message
+Notes
+Use a Before Delete trigger on Family Support Plan
+Query for related Village Tasks using the lookup relationship
+Use addError() to prevent deletion and show error message
+Only block deletion if BOTH conditions are true: High priority AND has related tasks
+Handle bulk delete operations properly
+Consider using aggregate queries to count related tasks efficiently
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Error_Message_Display</name>
+        <label>Error Message Display</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>Cannot delete a high-priority plan that has related tasks. Please remove all tasks first.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Check_for_related_task</name>
+        <label>Check for related task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Error_Message</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>related_Village_Task</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Message_Display</targetReference>
+            </connector>
+            <label>Error Message</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Day 7-&gt; Block High Priority Plan Deletion {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Day 7-&gt; Block High Priority Plan Deletion</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>related_Village_Task</name>
+        <label>related Village Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_for_related_task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CAMPX__Family_Support_Plan__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>CAMPX__Village_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>related_Village_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CAMPX__Priority__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </filters>
+        <object>CAMPX__Family_Support_Plan__c</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
