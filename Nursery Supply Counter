@@ -1,0 +1,73 @@
+Nursery Supply Counter
+
+Mama and Papa are preparing for their baby's arrival! They're organizing the nursery and need to count how many total items they have. 📦
+
+
+Given a list of supply categories with item counts, calculate the total number of items across all categories.
+
+
+Your method receives:
+
+supplies (Map<String, Integer>): map of supply category names to their counts
+Return an Integer representing the total number of items across all categories.
+
+
+Example 1:
+
+Input: supplies = {'Bottles': 6, 'Diapers': 24, 'Blankets': 3}
+Output: 33
+
+
+**Explanation**: 6 bottles + 24 diapers + 3 blankets = 33 total items.
+
+
+
+Example 2:
+
+Input: supplies = {'Onesies': 12, 'Bibs': 8}
+Output: 20
+
+
+**Explanation**: 12 onesies + 8 bibs = 20 total items.
+
+
+
+Example 3:
+
+Input: supplies = {'Pacifiers': 5}
+Output: 5
+
+
+**Explanation**: Only one category with 5 items.
+
+
+
+Example 4:
+
+Input: supplies = {}
+Output: 0
+
+
+**Explanation**: Empty map has 0 total items.
+
+
+
+Notes:
+
+All counts will be non-negative integers
+Map keys are category names (Strings)
+Map values are item counts (Integers)
+Return 0 for empty map
+All inputs will be valid
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+*Do not change the name of the class or the method signature.*/
+class Solution {
+    public Integer countTotalSupplies(Map<String, Integer> supplies) {
+        // Your solution here
+        Integer total=0;
+        for(String supply :supplies.keySet()){
+            total = total + supplies.get(supply);
+        }
+        return total;
+    }
+}
