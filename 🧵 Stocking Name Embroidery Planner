@@ -1,0 +1,92 @@
+🧵 Stocking Name Embroidery Planner
+
+Monica McPatchwork is embroidering Christmas stockings for Mama, Papa, and Baby Shaya to hang by the fireplace. Each letter requires different amounts of thread based on its width. 🎄
+
+
+Given a list of names and thread requirements per letter, calculate the total thread needed for all stockings.
+
+
+Your method receives:
+
+names (List): names to embroider
+threadPerLetter (Map<String, Integer>): map of each letter (uppercase) to inches of thread needed
+Return an Integer representing total inches of thread needed for all names.
+
+
+Example 1:
+
+Input: names = ['MAMA', 'PAPA'], threadPerLetter = {'M' => 5, 'A' => 4, 'P' => 5}
+Output: 36
+
+
+**Explanation**: MAMA = 5+4+5+4 = 18. PAPA = 5+4+5+4 = 18. Total = 36.
+
+
+
+Example 2:
+
+Input: names = ['SHAYA'], threadPerLetter = {'S' => 4, 'H' => 5, 'A' => 3, 'Y' => 4}
+Output: 19
+
+
+**Explanation**: S=4, H=5, A=3, Y=4, A=3. Total = 19.
+
+
+
+Example 3:
+
+Input: names = ['BOB', 'SUE', 'JO'], threadPerLetter = {'B' => 5, 'O' => 4, 'S' => 3, 'U' => 4, 'E' => 3, 'J' => 2}
+Output: 25
+
+
+**Explanation**: BOB = 5+4+5 = 14. SUE = 3+4+3 = 10. JO = 2+4 = 6. Total = 30.
+
+
+
+Example 3 (Corrected):
+
+Input: names = ['BOB', 'SUE'], threadPerLetter = {'B' => 5, 'O' => 4, 'S' => 3, 'U' => 4, 'E' => 3}
+Output: 24
+
+
+**Explanation**: BOB = 5+4+5 = 14. SUE = 3+4+3 = 10. Total = 24.
+
+
+
+Example 4:
+
+Input: names = ['A'], threadPerLetter = {'A' => 10}
+Output: 10
+
+
+**Explanation**: Single letter name.
+
+
+
+Notes:
+
+All names will be uppercase letters only
+All letters in the names will be present in the threadPerLetter map
+Names can have repeated letters (count each occurrence)
+Return 0 if names list is empty
+Thread amounts are in inches (positive integers)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public Integer calculateThreadNeeded(List<String> names, Map<String, Integer> threadPerLetter) {
+        // Your solution here
+        Integer thread= 0;
+        if( !names.isEmpty()){
+            for(String name :names){
+            Integer namelength = name.length();
+                if(namelength >0){
+                        for(Integer i=0;i<namelength;i++){
+                        String chStr = String.valueOf(name.charAt(i));
+                        thread =thread + threadPerLetter.get(chStr);
+                    }
+                }
+            }
+        }
+        return thread;
+    }
+}
