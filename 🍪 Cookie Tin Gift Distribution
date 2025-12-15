@@ -1,0 +1,95 @@
+🍪 Cookie Tin Gift Distribution
+
+Uncle Sep & Uncle Bean have baked delicious holiday cookies to thank all the village helpers who are preparing for baby's arrival. They want to distribute them as fairly as possible! 🎁
+
+
+Given a total number of cookies and a list of helper names, divide the cookies evenly. Any leftover cookies will be saved for Mama and Papa.
+
+
+Your method receives:
+
+totalCookies (Integer): total cookies baked
+helpers (List): names of people receiving cookies
+Return a Map<String, Object> containing:
+
+'cookiesPerPerson' (Integer): how many cookies each helper gets
+'leftoverForParents' (Integer): remaining cookies for Mama and Papa
+'distribution' (Map<String, Integer>): map of each helper name to their cookie count
+
+Example 1:
+
+Input: totalCookies = 20, helpers = ['Stella', 'Finn', 'Ivy']
+Output:
+
+{
+  'cookiesPerPerson' => 6,
+  'leftoverForParents' => 2,
+  'distribution' => {'Stella' => 6, 'Finn' => 6, 'Ivy' => 6}
+}
+
+> **Explanation**: 20 ÷ 3 = 6 remainder 2. Each gets 6, parents get 2.
+
+Example 2:
+
+Input: totalCookies = 15, helpers = ['Monica', 'Poppy', 'Holly', 'Grace', 'Tinker']
+Output:
+
+{
+  'cookiesPerPerson' => 3,
+  'leftoverForParents' => 0,
+  'distribution' => {'Monica' => 3, 'Poppy' => 3, 'Holly' => 3, 'Grace' => 3, 'Tinker' => 3}
+}
+
+> **Explanation**: 15 ÷ 5 = 3 exactly. No leftovers.
+
+Example 3:
+
+Input: totalCookies = 7, helpers = ['Ginger']
+Output:
+
+{
+  'cookiesPerPerson' => 7,
+  'leftoverForParents' => 0,
+  'distribution' => {'Ginger' => 7}
+}
+
+> **Explanation**: Single helper gets all cookies.
+
+Example 4:
+
+Input: totalCookies = 5, helpers = ['A', 'B', 'C', 'D']
+Output:
+
+{
+  'cookiesPerPerson' => 1,
+  'leftoverForParents' => 1,
+  'distribution' => {'A' => 1, 'B' => 1, 'C' => 1, 'D' => 1}
+}
+
+> **Explanation**: 5 ÷ 4 = 1 remainder 1.
+
+Notes:
+
+Use integer division: cookiesPerPerson = totalCookies / helpers.size()
+Use modulo for remainder: leftoverForParents = totalCookies % helpers.size()
+All helpers receive equal amounts (no favoritism!)
+totalCookies will be non-negative
+helpers list will have at least one name
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public Map<String, Object> distributeCookies(Integer totalCookies, List<String> helpers) {
+        // Your solution here
+        Map<String, Object> result = new Map<String, Object>();
+        Integer cookiesPerPersonCount =totalCookies/helpers.size();
+        Integer leftOverForParentsCount =math.mod(totalCookies,helpers.size());
+        Map<String,Integer> distributionMap = new Map<String,Integer>();
+        for(String helper :helpers){
+            distributionMap.put(helper,cookiesPerPersonCount);
+        }
+        result.put('cookiesPerPerson',cookiesPerPersonCount);
+        result.put('leftoverForParents',leftOverForParentsCount);
+        result.put('distribution',distributionMap);
+        return result;
+    }
+}
