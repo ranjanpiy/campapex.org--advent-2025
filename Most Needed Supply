@@ -1,0 +1,87 @@
+Most Needed Supply
+
+Mama is making a shopping list with the help of her friends! She compiled a list from all the supplies her friends shared with her. She's looking over what she wrote down and noticed some duplicates! Now she wants to know which item appears most frequently on her list. 🛒
+
+
+Given a list of supply items (representing each time an item was added to the shopping list), find which item appears most frequently.
+
+
+Your method receives:
+
+shoppingList (List): list of supply items (may have duplicates)
+Return a String representing the most frequently needed supply. If there's a tie, return the item that appears first in the list.
+
+
+Example 1:
+
+Input: shoppingList = ['Diapers', 'Wipes', 'Diapers', 'Diapers', 'Wipes']
+Output: 'Diapers'
+
+
+**Explanation**: Diapers appears 3 times, Wipes appears 2 times. Diapers is most frequent.
+
+
+
+Example 2:
+
+Input: shoppingList = ['Bottles', 'Formula', 'Bottles', 'Pacifier', 'Formula', 'Bottles']
+Output: 'Bottles'
+
+
+**Explanation**: Bottles appears 3 times (most frequent).
+
+
+
+Example 3:
+
+Input: shoppingList = ['Blanket', 'Onesie', 'Blanket', 'Onesie']
+Output: 'Blanket'
+
+
+**Explanation**: Both appear 2 times (tie). Blanket appears first in the list, so return 'Blanket'.
+
+
+
+Example 4:
+
+Input: shoppingList = ['Crib']
+Output: 'Crib'
+
+
+**Explanation**: Only one item, so it's the most frequent.
+
+
+
+Notes:
+
+Item names are case-sensitive ('Diapers' and 'diapers' are different)
+List will always have at least 1 item
+If multiple items have the same highest frequency, return the one that appears first in the original list
+Use a Map to track frequencies
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public String findMostNeededSupply(List<String> shoppingList) {
+        // Your solution here
+        List<Integer> countList = new List<Integer>();
+        Integer countHigh; 
+        String supply;
+        String shoppingListToString = String.join(shoppingList,',');
+        Map<String, Integer>shoppingItemcount = new Map<String, Integer>();
+        for(String shoppingItem :shoppingList){
+            Integer count = shoppingListToString.countMatches(shoppingItem);  
+            shoppingItemcount.put(shoppingItem,count);   
+        }
+        countList =shoppingItemcount.values();
+        countList.sort();
+        countHigh =countList.get(countList.size() -1);
+        for( String supplyItem :shoppingItemcount.keySet()){
+            if(countHigh == shoppingItemcount.get(supplyItem)){
+                supply = supplyItem;
+                break;
+            }
+        }
+        return supply;
+    }
+}
+Iterate through the list to maintain first-appearance order
