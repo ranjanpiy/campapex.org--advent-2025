@@ -1,0 +1,65 @@
+Perfect Wreath Symmetry
+
+Ivy Evergreen is arranging a wreath so that decorations mirror perfectly from left to right. Your job: confirm whether the given layout is symmetric.
+
+
+Given a string representing the wreath sections (each character is one decoration), determine if it reads the same forwards and backwards.
+
+
+Example 1:
+
+Input: layout = "o"
+Output: true
+
+
+**Explanation**: "*o*" is the same forwards and backwards.
+
+
+
+Example 2:
+
+Input: layout = "o**o"
+Output: true
+
+
+**Explanation**: The first and last match ('o'), the middle pair matches ('*','*').
+
+
+
+Example 3:
+
+Input: layout = "oo"
+Output: false
+
+
+**Explanation**: Reading backwards yields "*o*o", which differs.
+
+
+
+Example 4:
+
+Input: layout = ""
+Output: true
+
+
+**Explanation**: An empty layout is symmetric by definition.
+
+
+
+Notes:
+
+Input consists of visible ASCII characters; treat each character literally (case-sensitive, spaces count if present).
+Time target: O(n); space target: O(1) aside from input.
+Edge cases: empty string, single character, even/odd lengths.
+Do not modify the input string or use SOQL/DML/async. Pure Apex only. 🧩
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public Boolean isSymmetric(String layout){
+        
+        if(layout == layout.reverse())
+        return true;
+        else
+        return false;
+    }
+}
