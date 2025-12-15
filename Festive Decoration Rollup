@@ -66,3 +66,26 @@ The order of labels in the summary must match the order of their first appearanc
 Do not add extra spaces or trailing commas; follow the format LABEL xCOUNT joined by ", ".
 Use only in-memory Apex (no SOQL, DML, or async) and focus on using maps or similar structures to count and then format in first-seen order.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public String buildDecorSummary(List<String> decorElements) {
+        // Solution here
+        String result='';//for empty List case
+        List<String> resultList= new List<String>();
+        if( decorElements.isEmpty())
+        return result;
+        else{
+            String decorElementsListToString = String.join(decorElements,',');//convert the List to string for counting
+            Map<String, Integer>decorElementsItemcount = new Map<String, Integer>();
+            for(String decorElementsItem :decorElements){
+                Integer count = decorElementsListToString.countMatches(decorElementsItem);  //store values with count
+                decorElementsItemcount.put(decorElementsItem,count);   
+            }
+            for(String decorElementsItem :decorElementsItemcount.keySet()){
+                resultList.add(decorElementsItem+' x'+decorElementsItemcount.get(decorElementsItem)); //store the result as list
+            }
+            result = String.join(resultList,', ');//convert the list to string with seperator.
+            return result;
+        }
+    }
+}
