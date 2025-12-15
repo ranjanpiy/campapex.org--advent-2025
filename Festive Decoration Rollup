@@ -1,0 +1,68 @@
+Festive Decoration Rollup
+Poppy Wintergold is tracking every festive decoration she adds to the baby's nursery wall – stars, snowflakes, tiny wreaths, and twinkling garlands – for the baby's first Christmas. She wants a simple one-line summary she can share with Grandma for an organized view of all Christmas decorations used, so everyone knows exactly how the nursery is decorated and can plan any extra festive touches that still match the decor. 🎄
+
+
+Given a list of decoration labels in the order Poppy placed them, build a summary string that groups identical labels, counts how many times each appears, and lists them in the order they first appear.
+
+
+Technical Specifications:
+
+You are given a List<String> decorElements representing festive decorations in placement order (e.g., ['STAR', 'SNOWFLAKE', 'STAR', 'BOW']).
+You must count how many times each distinct label appears.
+The summary must list each distinct label in the order it first appears in decorElements.
+Each item in the summary is formatted as: LABEL xCOUNT (for example, STAR x3).
+Items are separated by a comma and a space: ", ".
+If decorElements is empty, return the empty string "".
+
+Example 1:
+
+Input:
+decorElements = ['STAR', 'SNOWFLAKE', 'STAR', 'BOW', 'STAR', 'BOW']
+
+Output:
+"STAR x3, SNOWFLAKE x1, BOW x2"
+
+Explanation: STAR appears 3 times, SNOWFLAKE appears 1 time, and BOW appears 2 times. STAR is listed first because it appears first in the input, followed by SNOWFLAKE, then BOW.
+
+
+Example 2:
+
+Input:
+decorElements = ['GARLAND', 'GARLAND', 'GARLAND']
+
+Output:
+"GARLAND x3"
+
+Explanation: There is only one distinct label (GARLAND), and it appears 3 times. The summary is just one entry: GARLAND x3.
+
+
+Example 3:
+
+Input:
+decorElements = ['BOW', 'RIBBON', 'STAR']
+
+Output:
+"BOW x1, RIBBON x1, STAR x1"
+
+Explanation: Each decoration label appears exactly once. The output preserves the original order: BOW, then RIBBON, then STAR.
+
+
+Example 4:
+
+Input:
+decorElements = []
+
+Output:
+""
+
+Explanation: There are no festive decorations, so the summary is an empty string.
+
+
+Notes:
+
+0 <= decorElements.size() <= 10_000.
+All strings in decorElements are non-null and may contain letters, digits, or underscores; you should treat labels as case-sensitive and preserve them exactly as given.
+The order of labels in the summary must match the order of their first appearance in decorElements; do not sort alphabetically.
+Do not add extra spaces or trailing commas; follow the format LABEL xCOUNT joined by ", ".
+Use only in-memory Apex (no SOQL, DML, or async) and focus on using maps or similar structures to count and then format in first-seen order.
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
