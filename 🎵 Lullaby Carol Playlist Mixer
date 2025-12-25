@@ -71,4 +71,39 @@ Pattern letters are case-insensitive (C or c = carol, L or l = lullaby)
 Songs cycle within their list (index wraps around when end is reached)
 Return empty list if pattern requires a type of song that has an empty list
 playlistLength will be a positive integer
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public List<String> mixPlaylist(List<String> carols, List<String> lullabies, String pattern, Integer playlistLength) {
+        // Your solution here
+        List<String> finalSong = new List<String>();
+        if(carols.isEmpty() || lullabies.isEmpty()){ //empty check
+        return finalSong;
+        }
+        List<String> patternString = new List<String>();
+        List<String> songString = new List<String>();
+        Integer indexCarol=0;
+        Integer indexLullaby=0;
+        for(Integer i=0;i<pattern.length();i++){
+            patternString.add(pattern.subString(i,i+1));//pattern converted to string
+        }
+        List<String> patternStringPlayListlength = new List<String>();
+        for(Integer i=1;i<=(playlistLength/patternString.size());i++){
+        patternStringPlayListlength.addAll(patternString);//pattern string converted to playlistlength for final output
+        }
+        for(Integer i=0;i<patternStringPlayListlength.size();i++){
+            
+            if(patternStringPlayListlength[i]=='C' || patternStringPlayListlength[i] =='c'){
+                finalSong.add(carols[indexCarol]);
+                indexCarol = math.mod(indexCarol+1,carols.size());//it updates the index back to 0 at end
+            }
+            else if(patternStringPlayListlength[i]=='L' || patternStringPlayListlength[i] =='l'){
+                finalSong.add(lullabies[indexLullaby]);
+                indexLullaby = math.mod(indexLullaby+1,lullabies.size());
+            }
+        }
+
+        return finalSong; 
+         
+    }
+}
