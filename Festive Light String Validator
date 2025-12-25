@@ -1,0 +1,91 @@
+Festive Light String Validator
+
+Finn Brightwick is testing strands of Christmas lights to hang around the nursery window. Each strand should have lights alternating between two colors for the perfect festive look. 🎄
+
+
+Given a string representing a sequence of light colors (single characters), determine if the pattern alternates correctly between exactly two colors.
+
+
+Return a Map<String, Object> containing:
+
+'isValid' (Boolean): true if pattern alternates correctly, false otherwise
+'firstError' (Integer): index of first position that breaks the pattern, or -1 if valid
+
+Example 1:
+
+Input: lights = "RGRGRG"
+Output: {'isValid' => true, 'firstError' => -1}
+
+
+**Explanation**: Alternates perfectly between R and G.
+
+
+
+Example 2:
+
+Input: lights = "RGRRRG"
+Output: {'isValid' => false, 'firstError' => 3}
+
+
+**Explanation**: Position 3 (fourth character) should be G but is R, breaking the pattern.
+
+
+
+Example 3:
+
+Input: lights = "BYBYYY"
+Output: {'isValid' => false, 'firstError' => 4}
+
+
+**Explanation**: Position 4 should be B but is Y.
+
+
+
+Example 4:
+
+Input: lights = "RRRRR"
+Output: {'isValid' => false, 'firstError' => 1}
+
+
+**Explanation**: Only one color used (should alternate between two). Position 1 should be different from position 0.
+
+
+
+Example 5:
+
+Input: lights = "RG"
+Output: {'isValid' => true, 'firstError' => -1}
+
+
+**Explanation**: Two lights alternating is valid.
+
+
+
+Notes:
+
+The string will have at least 2 characters
+Colors are represented by uppercase letters (A-Z)
+A valid pattern must alternate between exactly 2 different colors
+Position indices are 0-based
+If multiple errors exist, return the index of the first one
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Do not change the name of the class or the method signature.*/
+class Solution {
+    public Map<String, Object> validateLightString(String lights) {
+        // Your solution here
+        Map<String, Object> output = new Map<String, Object>();
+        Boolean valid =true;
+        Integer firsterror =-1;
+        for(Integer i=0;i <(lights.length()-1);i++){
+            if(lights.charAt(i) == lights.charAt(i+1)){
+                valid =false;
+                firsterror =i+1;
+                break;
+            }
+        }
+        output.put('firstError',firsterror);
+        output.put('isValid',valid);
+        
+        return output;
+    }
+}
