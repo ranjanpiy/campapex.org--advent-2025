@@ -1,0 +1,74 @@
+🎵 Lullaby Carol Playlist Mixer
+Maestro Shakira is creating a special playlist that blends gentle Christmas carols with traditional lullabies for the baby. The playlist should follow a specific pattern. 🎶
+
+
+Given two lists of songs (carols and lullabies) and a pattern string, create a playlist of specified length following the pattern. If one list runs out, continue with the other.
+
+
+Your method receives:
+
+carols (List): list of carol names
+lullabies (List): list of lullaby names
+pattern (String): sequence like 'CLLc' where C=carol, L=lullaby (case insensitive)
+playlistLength (Integer): desired number of songs
+Return a List of song names following the pattern, or empty list if impossible.
+
+
+Example 1:
+
+Input: carols = ['Jingle Bells', 'Silent Night'], lullabies = ['Twinkle Star', 'Rock-a-bye'], pattern = 'CLCL', playlistLength = 4
+Output: ['Jingle Bells', 'Twinkle Star', 'Silent Night', 'Rock-a-bye']
+
+
+**Explanation**: Follows C-L-C-L pattern using songs in order.
+
+
+
+Example 2:
+
+Input: carols = ['Carol1', 'Carol2'], lullabies = ['Lullaby1'], pattern = 'CLL', playlistLength = 6
+Output: ['Carol1', 'Lullaby1', 'Lullaby1', 'Carol2', 'Lullaby1', 'Lullaby1']
+
+
+**Explanation**: Pattern CLL repeats. When lullabies run out (only 1), we can't fulfill the pattern... wait, let me reconsider.
+
+
+
+Example 2 (Corrected):
+
+Input: carols = ['Carol1', 'Carol2', 'Carol3'], lullabies = ['Lullaby1', 'Lullaby2'], pattern = 'CL', playlistLength = 4
+Output: ['Carol1', 'Lullaby1', 'Carol2', 'Lullaby2']
+
+
+**Explanation**: Pattern CL repeats twice for 4 songs.
+
+
+
+Example 3:
+
+Input: carols = ['Carol1'], lullabies = ['Lullaby1', 'Lullaby2', 'Lullaby3'], pattern = 'CLL', playlistLength = 6
+Output: ['Carol1', 'Lullaby1', 'Lullaby2', 'Carol1', 'Lullaby3', 'Lullaby1']
+
+
+**Explanation**: Pattern repeats. When carols run out, cycle back to Carol1. Continue with lullabies cycling.
+
+
+
+Example 4:
+
+Input: carols = [], lullabies = ['Lullaby1'], pattern = 'CL', playlistLength = 2
+Output: []
+
+
+**Explanation**: No carols available, can't fulfill pattern that requires C.
+
+
+
+Notes:
+
+Pattern repeats cyclically until playlistLength is reached
+Pattern letters are case-insensitive (C or c = carol, L or l = lullaby)
+Songs cycle within their list (index wraps around when end is reached)
+Return empty list if pattern requires a type of song that has an empty list
+playlistLength will be a positive integer
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
